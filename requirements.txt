@@ -1,0 +1,8 @@
+pandas
+requests
+datetime
+json
+os
+time
+pymsteams
+pymongo
