@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fp-research-data-acq
+  namespace: fp-research-data-acq
+data:
+  serviceAccount: ""

@@ -1,0 +1,42 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: fp-research-data-acq
+  namespace: fp-research-data-acq
+spec:
+  concurrencyPolicy: Forbid
+  failedJobsHistoryLimit: 5
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - image: eu.gcr.io/dev-avora/fp-research-data-acq:8464065
+              imagePullPolicy: IfNotPresent
+              name: fp-research-data-acq
+              resources: {}
+              terminationMessagePath: /dev/termination-log
+              terminationMessagePolicy: File
+              volumeMounts:
+                - mountPath: /secrets/storage
+                  name: storage-credentials
+                  readOnly: true
+              env:
+                - name: SERVICE_ACCOUNT
+                  valueFrom:
+                    configMapKeyRef:
+                      name: fp-research-data-acq
+                      key: serviceAccount
+          volumes:
+            - name: storage-credentials
+              secret:
+              defaultMode: 420
+              secretName: storage-credentials
+          dnsPolicy: ClusterFirst
+          restartPolicy: OnFailure
+          schedulerName: default-scheduler
+          securityContext: {}
+          terminationGracePeriodSeconds: 30
+  schedule: 0 * * * 1-5
+  successfulJobsHistoryLimit: 10
+  suspend: false
