@@ -6,4 +6,4 @@ datetime
 pymsteams==0.1.14
 pymongo
 six==1.3
-google-cloud-storage
+google-cloud-storage==1.33.0
