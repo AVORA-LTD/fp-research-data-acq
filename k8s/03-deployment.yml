@@ -11,7 +11,7 @@ spec:
       template:
         spec:
           containers:
-            - image: eu.gcr.io/dev-avora/fp-research-data-acq:8464065
+            - image: eu.gcr.io/dev-avora/fp-research-data-acq:test
               imagePullPolicy: IfNotPresent
               name: fp-research-data-acq
               resources: {}
@@ -30,13 +30,13 @@ spec:
           volumes:
             - name: storage-credentials
               secret:
-              defaultMode: 420
-              secretName: storage-credentials
+                defaultMode: 420
+                secretName: storage-credentials
           dnsPolicy: ClusterFirst
           restartPolicy: OnFailure
           schedulerName: default-scheduler
           securityContext: {}
           terminationGracePeriodSeconds: 30
-  schedule: 0 * * * 1-5
+  schedule: 0,15,30,45 * * * *
   successfulJobsHistoryLimit: 10
   suspend: false

@@ -1,0 +1,34 @@
+tags:
+  - fp-research-data-acq
+  - PROD
+steps:
+  - name: gcr.io/cloud-builders/docker
+    args:
+      [
+        "build",
+        "-t",
+        "eu.gcr.io/${_PROJECT_ID}/fp-research-data-acq:$SHORT_SHA",
+        "-f",
+        "cloud-build/Dockerfile",
+        ".",
+      ]
+  - name: gcr.io/cloud-builders/docker
+    args: ["push", "eu.gcr.io/${_PROJECT_ID}/fp-research-data-acq:$SHORT_SHA"]
+  - name: gcr.io/cloud-builders/curl
+    entrypoint: bash
+    args:
+      - -c
+      - |
+        curl -si "https://jenkins.cl.avora.com/buildByToken/buildWithParameters?job=Update%20Deployment&token=$${jtoken}&applicationToDeploy=fp-research-data-acq&environmentToDeploy=${_JENKINS_ENV}&imageHash=${SHORT_SHA}&type=cronjob"
+    secretEnv: ["jtoken"]
+substitutions:
+  _LOCATION: europe-west2
+  _PROJECT_ID: dev-avora
+  _JENKINS_ENV: dev
+  _JENKINS_VERSION_TO_DEPLOY: main
+  _JENKINS_AUTO_APPROVE: "yes"
+  _IMAGE: master
+secrets:
+  - kmsKeyName: projects/dev-avora/locations/europe-west2/keyRings/dev-avora/cryptoKeys/dev-avora
+    secretEnv:
+      jtoken: CiQA6avvC6FmEPKbSBAEd1wirhWxm1nkqU1LCToLvSbULAsdCWASPQB8XA/YUGjc1lkueJYUvYv0Q/0PG1ed1BTnEQkV5ayyvgxdKNczntt13ydfO98BS+DLVhHHK7aCSytqvwE=
