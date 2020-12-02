@@ -1,9 +1,6 @@
 pandas
 requests
 datetime
-json
-os
-time
 pymsteams
 pymongo
 six==1.3
