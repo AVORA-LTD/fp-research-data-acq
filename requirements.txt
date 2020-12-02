@@ -3,7 +3,7 @@ m2r
 pandas
 requests
 datetime
-pymsteams
+pymsteams==0.1.14
 pymongo
 six==1.3
 google-cloud-storage
