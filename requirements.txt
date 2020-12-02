@@ -1,9 +1,9 @@
 docutils==0.15.2
-m2r
-pandas
-requests
-datetime
+m2r==0.2.1
+pandas==1.0.3
+requests==2.22.0
+datetime==4.3
 pymsteams==0.1.14
-pymongo
+pymongo==3.9.0
 six==1.3
 google-cloud-storage==1.33.0
