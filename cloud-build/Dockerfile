@@ -22,5 +22,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 
 COPY app/* ./
+COPY entrypoint.sh /entrypoint.sh
 ENTRYPOINT [ "/entrypoint.sh" ]
 CMD ["python", "app/app.py"]
