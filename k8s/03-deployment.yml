@@ -26,6 +26,11 @@ spec:
                   valueFrom:
                     configMapKeyRef:
                       name: fp-research-data-acq
+                      key: googleApplicationCredentials
+                - name: SERVICE_ACCOUNT
+                  valueFrom:
+                    configMapKeyRef:
+                      name: fp-research-data-acq
                       key: serviceAccount
           volumes:
             - name: storage-credentials

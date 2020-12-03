@@ -5,3 +5,4 @@ metadata:
   namespace: fp-research-data-acq
 data:
   serviceAccount: "julia-bohutska@dev-avora.iam.gserviceaccount.com"
+  googleApplicationCredentials: "/secrets/storage/storage_client.json"
