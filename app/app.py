@@ -120,7 +120,7 @@ for param in params_list:
 
         if succes:
             bucket = client.get_bucket('julia-bucket')
-            bucket.blob('{}_{}.csv'.format(str(param[metric_id]), str(max_date))).upload_from_string(df.to_csv(), 'text/csv')
+            bucket.blob('{}_{}.csv'.format(str(param["metric_id"]), str(max_date))).upload_from_string(df.to_csv(), 'text/csv')
             update.append([str(param['metric_id']),"Succes"])
         else:
             update.append([str(param['metric_id']), response])
