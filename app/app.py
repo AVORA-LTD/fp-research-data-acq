@@ -109,7 +109,7 @@ params_list = metrics_df.apply(lambda x: get_meta(x), axis=1).tolist()
 connection.close()
 
 
-#client = storage.Client()
+client = storage.Client()
 
 update=[]
 for param in params_list:
