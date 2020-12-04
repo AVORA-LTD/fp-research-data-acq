@@ -1,5 +1,5 @@
 tags:
-  - fp-research-data-acq
+  - smart-alert-trigger
   - PROD
 steps:
   - name: gcr.io/cloud-builders/docker
@@ -7,19 +7,19 @@ steps:
       [
         "build",
         "-t",
-        "eu.gcr.io/${_PROJECT_ID}/fp-research-data-acq:$SHORT_SHA",
+        "eu.gcr.io/${_PROJECT_ID}/smart-alert-trigger:$SHORT_SHA",
         "-f",
         "cloud-build/Dockerfile",
         ".",
       ]
   - name: gcr.io/cloud-builders/docker
-    args: ["push", "eu.gcr.io/${_PROJECT_ID}/fp-research-data-acq:$SHORT_SHA"]
+    args: ["push", "eu.gcr.io/${_PROJECT_ID}/smart-alert-trigger:$SHORT_SHA"]
   - name: gcr.io/cloud-builders/curl
     entrypoint: bash
     args:
       - -c
       - |
-        curl -si "https://jenkins.cl.avora.com/buildByToken/buildWithParameters?job=Update%20Deployment&token=$${jtoken}&applicationToDeploy=fp-research-data-acq&environmentToDeploy=${_JENKINS_ENV}&imageHash=${SHORT_SHA}&type=cronjob"
+        curl -si "https://jenkins.cl.avora.com/buildByToken/buildWithParameters?job=Update%20Deployment&token=$${jtoken}&applicationToDeploy=smart-alert-trigger&environmentToDeploy=${_JENKINS_ENV}&imageHash=${SHORT_SHA}&type=cronjob"
     secretEnv: ["jtoken"]
 substitutions:
   _LOCATION: europe-west2
