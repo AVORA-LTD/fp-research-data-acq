@@ -1,27 +1,47 @@
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  name: smart-alert-trigger
-  namespace: smart-alert-trigger
+  name: fp-research-data-acq
+  namespace: fp-research-data-acq
 spec:
   concurrencyPolicy: Forbid
-  failedJobsHistoryLimit: 10
+  failedJobsHistoryLimit: 5
   jobTemplate:
     spec:
       template:
         spec:
           containers:
-            - image: eu.gcr.io/dev-avora/smart-alert-trigger:test
+            - image: eu.gcr.io/dev-avora/fp-research-data-acq:test
               imagePullPolicy: IfNotPresent
-              name: smart-alert-trigger
+              name: fp-research-data-acq
               resources: {}
               terminationMessagePath: /dev/termination-log
               terminationMessagePolicy: File
+              volumeMounts:
+                - mountPath: /secrets/storage
+                  name: storage-credentials
+                  readOnly: true
+              env:
+                - name: GOOGLE_APPLICATION_CREDENTIALS
+                  valueFrom:
+                    configMapKeyRef:
+                      name: fp-research-data-acq
+                      key: googleApplicationCredentials
+                - name: SERVICE_ACCOUNT
+                  valueFrom:
+                    configMapKeyRef:
+                      name: fp-research-data-acq
+                      key: serviceAccount
+          volumes:
+            - name: storage-credentials
+              secret:
+                defaultMode: 420
+                secretName: storage-credentials
           dnsPolicy: ClusterFirst
           restartPolicy: OnFailure
           schedulerName: default-scheduler
           securityContext: {}
           terminationGracePeriodSeconds: 30
-  schedule: 0-23/6
-  successfulJobsHistoryLimit: 5
+  schedule: 0,15,30,45 * * * *
+  successfulJobsHistoryLimit: 10
   suspend: false
